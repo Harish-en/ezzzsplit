@@ -1,0 +1,12 @@
+                                
+                                <!-- Input fields cho "Trả cụ thể" -->
+                                <div id="paidByAmountsContainer" class="hidden mt-4 p-4 bg-yellow-50 rounded-lg space-y-3">
+                                    <p class="text-sm text-gray-600">Nhập số tiền mỗi người trả:</p>
+                                    <div id="paidByAmountsInputs" class="space-y-2">
+                                        <!-- Sẽ được điền bằng JavaScript -->
+                                    </div>
+                                    <div class="text-sm text-gray-600 mt-2">
+                                        <span>Tổng cộng: </span>
+                                        <span id="paidByAmountsTotal" class="font-bold text-green-600">0 ₫</span>
+                                    </div>
+                                </div>
