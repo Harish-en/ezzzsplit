@@ -7,42 +7,75 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        teal: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         * {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            /* Nền hiện đại, sáng sủa hơn */
+            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
             min-height: 100vh;
+            color: #334155;
         }
         
         .card {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px -10px rgba(13, 148, 136, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 16px;
             transition: all 0.3s ease;
         }
         
         .card:hover {
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px -12px rgba(13, 148, 136, 0.2);
         }
         
+        /* Modern Teal Gradient Button */
         .btn-primary {
-            background: linear-gradient(135deg, #77DD77 0%, #5AC85A 100%);
+            background: linear-gradient(135deg, #2dd4bf 0%, #0f766e 100%);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: 0.3px;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(119, 221, 119, 0.4);
+            box-shadow: 0 8px 16px rgba(13, 148, 136, 0.4);
+            filter: brightness(1.05);
         }
         
         .btn-primary:active {
@@ -50,148 +83,45 @@
         }
         
         .btn-secondary {
-            background: #f3f4f6;
-            color: #374151;
-            border: 1px solid #e5e7eb;
-            padding: 8px 16px;
-            border-radius: 6px;
+            background: white;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            padding: 10px 20px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: 500;
             transition: all 0.3s ease;
         }
         
         .btn-secondary:hover {
-            background: #e5e7eb;
-        }
-        
-        .btn-danger {
-            background: #fee2e2;
-            color: #dc2626;
-            border: 1px solid #fecaca;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-danger:hover {
-            background: #fecaca;
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #1e293b;
         }
         
         .input-field {
-            border: 1px solid #e5e7eb;
-            padding: 10px 12px;
-            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            padding: 12px 16px;
+            border-radius: 10px;
             font-size: 14px;
             transition: all 0.3s ease;
+            width: 100%;
         }
         
         .input-field:focus {
             outline: none;
-            border-color: #77DD77;
-            box-shadow: 0 0 0 3px rgba(119, 221, 119, 0.1);
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .badge-success {
-            background: #dcfce7;
-            color: #166534;
-        }
-        
-        .badge-danger {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-        
-        .badge-info {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-        
-        .tab-button {
-            padding: 12px 24px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-weight: 500;
-            color: #9ca3af;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-        }
-        
-        .tab-button.active {
-            color: #77DD77;
-            border-bottom-color: #77DD77;
-        }
-        
-        /* Settlement Card Styles */
-        .settlement-card {
+            border-color: #2dd4bf;
             background: white;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            border-left: 5px solid #77DD77;
-            transition: all 0.3s ease;
+            box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.15);
         }
         
-        .settlement-card.paid {
-            border-left-color: #22c55e;
-            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
-        }
-        
-        .settlement-card.owing {
-            border-left-color: #ef4444;
-            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
-        }
-        
-        .member-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #77DD77 0%, #5AC85A 100%);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .member-avatar {
-            width: 24px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
+        /* Stepper Styling */
         .stepper {
             display: flex;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
+            position: relative;
         }
         
         .stepper-item {
@@ -199,292 +129,346 @@
             flex-direction: column;
             align-items: center;
             flex: 1;
+            z-index: 2;
         }
         
         .stepper-number {
-            width: 40px;
-            height: 40px;
-            background: #e5e7eb;
+            width: 36px;
+            height: 36px;
+            background: #f1f5f9;
+            border: 2px solid #e2e8f0;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: #6b7280;
+            font-weight: 700;
+            color: #94a3b8;
             margin-bottom: 8px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .stepper-item.active .stepper-number {
-            background: linear-gradient(135deg, #77DD77 0%, #5AC85A 100%);
-            color: white;
+            background: white;
+            border-color: #0d9488;
+            color: #0d9488;
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
+            transform: scale(1.1);
         }
         
         .stepper-item.completed .stepper-number {
-            background: #22c55e;
+            background: #0d9488;
+            border-color: #0d9488;
             color: white;
         }
         
         .stepper-line {
             flex: 1;
-            height: 2px;
-            background: #e5e7eb;
-            margin: 0 8px;
+            height: 3px;
+            background: #e2e8f0;
+            margin: 0 -10px; /* Overlap slightly */
+            z-index: 1;
+            border-radius: 2px;
+            position: relative;
+            top: -14px; /* Adjust based on label height */
         }
         
-        .stepper-item.completed .stepper-line {
-            background: #22c55e;
+        .stepper-item.completed + .stepper-line {
+            background: #2dd4bf;
         }
         
         .stepper-label {
             font-size: 12px;
-            color: #6b7280;
+            color: #64748b;
             text-align: center;
-            font-weight: 500;
+            font-weight: 600;
+            transition: color 0.3s;
         }
         
         .stepper-item.active .stepper-label {
-            color: #77DD77;
+            color: #0d9488;
+        }
+
+        /* Tab Buttons */
+        .tab-button {
+            padding: 12px 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748b;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
         }
         
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e5e7eb;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 8px;
+        .tab-button.active {
+            color: #0d9488;
+            border-bottom-color: #0d9488;
         }
         
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #77DD77 0%, #5AC85A 100%);
-            transition: width 0.3s ease;
+        .tab-button:hover:not(.active) {
+            color: #334155;
+        }
+
+        /* Chips & Tags */
+        .member-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            /* Gradient Teal */
+            background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+            color: #0f766e;
+            padding: 6px 14px;
+            border-radius: 99px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #5eead4;
+            animation: slideIn 0.3s ease;
         }
         
-        .amount-display {
-            font-size: 24px;
+        .member-avatar {
+            width: 20px;
+            height: 20px;
+            background: #0f766e;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
             font-weight: bold;
-            color: #1f2937;
+        }
+
+        /* Settlement Cards - Keep Semantic Green/Red for Money, but modernize */
+        .settlement-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            position: relative;
+            overflow: hidden;
         }
         
-        .amount-display.positive {
-            color: #22c55e;
+        .settlement-card.paid {
+            /* Semantic Green but softer */
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
         }
         
-        .amount-display.negative {
-            color: #ef4444;
+        .settlement-card.owing {
+            /* Semantic Red but softer */
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
         }
-        
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #9ca3af;
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
         }
-        
-        .empty-state i {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.5;
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
         }
     </style>
 </head>
 <body>
     <div class="min-h-screen py-8 px-4">
         <div class="max-w-6xl mx-auto">
-            <!-- Header -->
-            <div class="text-center mb-8">
-                <h1 class="text-5xl font-bold text-gray-800 mb-2">
-                    <i class="fas fa-coins text-green-500 mr-3"></i>EzzzSplit
+            <div class="text-center mb-10">
+                <h1 class="text-5xl font-bold text-slate-800 mb-2 tracking-tight">
+                    <i class="fas fa-layer-group text-teal-500 mr-3"></i>EzzzSplit
                 </h1>
-                <p class="text-gray-600 text-lg">Chia sẻ chi phí nhóm một cách thông minh</p>
+                <p class="text-slate-500 text-lg font-medium">Chia sẻ chi phí nhóm thông minh & hiện đại</p>
             </div>
 
-            <!-- Main Container -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Left Column: Form & Members -->
-                <div class="lg:col-span-2">
-                    <!-- Add Expense Form with Stepper -->
-                    <div class="card bg-white p-6 mb-6">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-6">
-                            <i class="fas fa-plus-circle text-green-500 mr-2"></i>Thêm Chi Tiêu
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="card p-8">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-8 flex items-center">
+                            <span class="bg-teal-100 text-teal-600 w-10 h-10 rounded-xl flex items-center justify-center mr-3 text-lg shadow-sm">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            Thêm Chi Tiêu Mới
                         </h2>
                         
-                        <!-- Stepper -->
-                        <div class="stepper mb-8">
+                        <div class="stepper">
                             <div class="stepper-item completed">
-                                <div class="stepper-number"><i class="fas fa-check"></i></div>
-                                <div class="stepper-label">Tên & Số tiền</div>
+                                <div class="stepper-number"><i class="fas fa-check text-xs"></i></div>
+                                <div class="stepper-label">Chi tiết</div>
                             </div>
                             <div class="stepper-line"></div>
                             <div class="stepper-item completed">
-                                <div class="stepper-number"><i class="fas fa-check"></i></div>
+                                <div class="stepper-number"><i class="fas fa-check text-xs"></i></div>
                                 <div class="stepper-label">Người trả</div>
                             </div>
                             <div class="stepper-line"></div>
                             <div class="stepper-item active">
                                 <div class="stepper-number">3</div>
-                                <div class="stepper-label">Người tham gia</div>
+                                <div class="stepper-label">Thụ hưởng</div>
                             </div>
                             <div class="stepper-line"></div>
                             <div class="stepper-item">
                                 <div class="stepper-number">4</div>
-                                <div class="stepper-label">Xác nhận</div>
+                                <div class="stepper-label">Lưu</div>
                             </div>
                         </div>
                         
-                        <form id="expenseForm" class="space-y-4">
-                            <!-- Step 1: Tên & Số tiền -->
+                        <form id="expenseForm" class="space-y-6">
                             <div class="step-1">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Tên chi tiêu *</label>
-                                        <input type="text" id="expenseName" class="input-field w-full" placeholder="VD: Ăn trưa, Xăng xe..." required>
+                                        <label class="block text-sm font-semibold text-slate-700 mb-2">Tên khoản chi *</label>
+                                        <div class="relative">
+                                            <i class="fas fa-tag absolute left-4 top-3.5 text-slate-400"></i>
+                                            <input type="text" id="expenseName" class="input-field pl-10" placeholder="VD: Ăn trưa, Karaoke..." required>
+                                        </div>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Số tiền (VND) *</label>
-                                        <input type="number" id="expenseAmount" class="input-field w-full" placeholder="0" min="0" step="1000" required>
+                                        <label class="block text-sm font-semibold text-slate-700 mb-2">Số tiền (VNĐ) *</label>
+                                        <div class="relative">
+                                            <span class="absolute left-4 top-3.5 text-slate-400 font-bold">₫</span>
+                                            <input type="number" id="expenseAmount" class="input-field pl-10" placeholder="0" min="0" step="1000" required>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Step 2: Người trả tiền -->
-                            <div class="step-2">
-                                <label class="block text-sm font-medium text-gray-700 mb-3">Người trả tiền * (có thể chọn nhiều)</label>
-                                <div id="paidByList" class="space-y-2 p-4 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg border border-green-200">
-                                    <!-- Checkboxes will be rendered here -->
-                                </div>
+                            <div class="step-2 bg-slate-50 p-5 rounded-xl border border-slate-100">
+                                <label class="block text-sm font-semibold text-teal-700 mb-3 uppercase tracking-wide">
+                                    <i class="fas fa-wallet mr-2"></i>Người thanh toán
+                                </label>
+                                <div id="paidByList" class="space-y-2">
+                                    </div>
                                 
-                                <!-- Payer Split Mode Section -->
-                                <div id="paidBySplitModeSection" class="hidden mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                    <label class="block text-sm font-medium text-gray-700 mb-3">Cách chia tiền của người trả tiền</label>
-                                    <div class="flex items-center gap-4">
-                                        <label class="flex items-center cursor-pointer">
-                                            <input type="radio" id="paidBySplitEqual" name="paidBySplitMode" value="equal" checked class="mr-2">
-                                            <span class="text-sm font-medium text-gray-700">Chia đều</span>
-                                        </label>
-                                        <label class="flex items-center cursor-pointer">
-                                            <input type="radio" id="paidBySplitCustom" name="paidBySplitMode" value="custom" class="mr-2">
-                                            <span class="text-sm font-medium text-gray-700">Trả cụ thể</span>
-                                        </label>
+                                <div id="paidBySplitModeSection" class="hidden mt-4 pt-4 border-t border-slate-200">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-sm font-medium text-slate-600">Chế độ chia:</span>
+                                        <div class="flex items-center gap-4 bg-white p-1 rounded-lg border border-slate-200">
+                                            <label class="cursor-pointer px-3 py-1 hover:text-teal-600 transition-colors">
+                                                <input type="radio" id="paidBySplitEqual" name="paidBySplitMode" value="equal" checked class="mr-1 accent-teal-600">
+                                                <span class="text-sm">Đều nhau</span>
+                                            </label>
+                                            <label class="cursor-pointer px-3 py-1 hover:text-teal-600 transition-colors">
+                                                <input type="radio" id="paidBySplitCustom" name="paidBySplitMode" value="custom" class="mr-1 accent-teal-600">
+                                                <span class="text-sm">Tùy chỉnh</span>
+                                            </label>
+                                        </div>
                                     </div>
                                     
-                                    <!-- Input fields cho "Trả cụ thể" -->
-                                    <div id="paidByAmountsContainer" class="hidden mt-4 p-4 bg-yellow-50 rounded-lg space-y-3">
-                                        <p class="text-sm text-gray-600">Nhập số tiền mỗi người trả:</p>
+                                    <div id="paidByAmountsContainer" class="hidden p-4 bg-orange-50 rounded-lg border border-orange-100 space-y-3">
                                         <div id="paidByAmountsInputs" class="space-y-2">
-                                            <!-- Sẽ được điền bằng JavaScript -->
-                                        </div>
-                                        <div class="text-sm text-gray-600 mt-2">
-                                            <span>Tổng cộng: </span>
-                                            <span id="paidByAmountsTotal" class="font-bold text-green-600">0 ₫</span>
+                                            </div>
+                                        <div class="flex justify-between items-center text-sm font-medium pt-2 border-t border-orange-200 text-orange-800">
+                                            <span>Tổng nhập:</span>
+                                            <span id="paidByAmountsTotal" class="font-bold text-lg">0 ₫</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Step 3: Người tham gia -->
-                            <div class="step-3">
-                                <label class="block text-sm font-medium text-gray-700 mb-3">Người tham gia *</label>
-                                <div id="participantsList" class="space-y-2 max-h-48 overflow-y-auto p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg border border-purple-200">
-                                    <!-- Sẽ được điền bằng JavaScript -->
-                                </div>
+                            <div class="step-3 bg-slate-50 p-5 rounded-xl border border-slate-100">
+                                <label class="block text-sm font-semibold text-teal-700 mb-3 uppercase tracking-wide">
+                                    <i class="fas fa-users mr-2"></i>Người thụ hưởng
+                                </label>
+                                <div id="participantsList" class="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                                    </div>
                             </div>
 
-                            <!-- Step 4: Chế độ chia tiền -->
                             <div class="step-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-3">Cách chia tiền cho người tham gia *</label>
-                                <div class="flex items-center gap-4 p-4 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-lg border border-indigo-200">
-                                    <label class="flex items-center cursor-pointer">
-                                        <input type="radio" id="splitEqual" name="splitMode" value="equal" checked class="mr-2">
-                                        <span class="text-sm font-medium text-gray-700">Chia đều</span>
+                                <label class="block text-sm font-semibold text-slate-700 mb-3">Phương thức chia sẻ *</label>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <label class="relative flex items-center justify-center p-4 border border-teal-200 bg-teal-50 rounded-xl cursor-pointer hover:bg-teal-100 transition-all">
+                                        <input type="radio" id="splitEqual" name="splitMode" value="equal" checked class="absolute top-3 right-3 accent-teal-600">
+                                        <div class="text-center">
+                                            <i class="fas fa-equals text-teal-500 text-xl mb-1"></i>
+                                            <div class="text-sm font-bold text-teal-800">Chia đều</div>
+                                        </div>
                                     </label>
-                                    <label class="flex items-center cursor-pointer">
-                                        <input type="radio" id="splitCustom" name="splitMode" value="custom" class="mr-2">
-                                        <span class="text-sm font-medium text-gray-700">Chia cụ thể</span>
+                                    <label class="relative flex items-center justify-center p-4 border border-slate-200 bg-white rounded-xl cursor-pointer hover:bg-slate-50 transition-all">
+                                        <input type="radio" id="splitCustom" name="splitMode" value="custom" class="absolute top-3 right-3 accent-teal-600">
+                                        <div class="text-center">
+                                            <i class="fas fa-pencil-alt text-slate-400 text-xl mb-1"></i>
+                                            <div class="text-sm font-bold text-slate-600">Tùy chỉnh</div>
+                                        </div>
                                     </label>
                                 </div>
                             </div>
 
-                            <!-- Buttons -->
-                            <div class="flex gap-3 pt-4 border-t border-gray-200">
-                                <button type="submit" class="btn-primary flex-1">
-                                    <i class="fas fa-save mr-2"></i>Lưu Chi Tiêu
+                            <div class="flex gap-4 pt-6 mt-4 border-t border-slate-100">
+                                <button type="submit" class="btn-primary flex-1 flex items-center justify-center">
+                                    <i class="fas fa-save mr-2"></i>Lưu Khoản Chi
                                 </button>
-                                <button type="reset" class="btn-secondary flex-1">
-                                    <i class="fas fa-redo mr-2"></i>Xóa Form
+                                <button type="reset" class="btn-secondary w-1/3 flex items-center justify-center text-slate-500 hover:text-red-500 hover:border-red-200 hover:bg-red-50">
+                                    <i class="fas fa-trash-alt mr-2"></i>Xóa
                                 </button>
                             </div>
                         </form>
                     </div>
 
-                    <!-- Members Management -->
-                    <div class="card bg-white p-6">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4">
-                            <i class="fas fa-users text-blue-500 mr-2"></i>Quản lý Thành viên
+                    <div class="card p-6">
+                        <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center">
+                            <i class="fas fa-user-friends text-teal-500 mr-2"></i>Thành viên nhóm
                         </h2>
                         
-                        <div class="flex gap-2 mb-6">
-                            <input type="text" id="newMemberName" class="input-field flex-1" placeholder="Tên thành viên mới">
-                            <button id="addMemberBtn" class="btn-primary">
-                                <i class="fas fa-plus mr-2"></i>Thêm
+                        <div class="flex gap-3 mb-6">
+                            <input type="text" id="newMemberName" class="input-field flex-1" placeholder="Nhập tên thành viên...">
+                            <button id="addMemberBtn" class="bg-teal-100 text-teal-700 hover:bg-teal-200 px-4 py-2 rounded-lg font-semibold transition-colors">
+                                <i class="fas fa-plus"></i>
                             </button>
                         </div>
 
                         <div id="membersList" class="flex flex-wrap gap-2">
-                            <!-- Sẽ được điền bằng JavaScript -->
-                        </div>
+                            </div>
                     </div>
                 </div>
 
-                <!-- Right Column: Results -->
                 <div class="lg:col-span-1">
-                    <!-- Tabs -->
-                    <div class="flex gap-2 mb-4 border-b border-gray-200">
-                        <button class="tab-button active" data-tab="expenses">
-                            <i class="fas fa-list mr-2"></i>Chi Tiêu
-                        </button>
-                        <button class="tab-button" data-tab="settlement">
-                            <i class="fas fa-calculator mr-2"></i>Tính Toán
-                        </button>
-                    </div>
-
-                    <!-- Expenses Tab -->
-                    <div id="expensesTab" class="tab-content">
-                        <div id="expensesList" class="space-y-3">
-                            <!-- Sẽ được điền bằng JavaScript -->
+                    <div class="sticky top-6">
+                        <div class="flex p-1 bg-slate-200 rounded-xl mb-6">
+                            <button class="flex-1 py-2 px-4 rounded-lg text-sm font-semibold text-slate-600 transition-all active-tab-style" data-tab="expenses" style="background: white; color: #0f766e; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                                <i class="fas fa-receipt mr-2"></i>Danh sách
+                            </button>
+                            <button class="flex-1 py-2 px-4 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-700 transition-all" data-tab="settlement">
+                                <i class="fas fa-calculator mr-2"></i>Công nợ
+                            </button>
                         </div>
-                    </div>
 
-                    <!-- Settlement Tab -->
-                    <div id="settlementTab" class="tab-content hidden">
-                        <!-- Summary - Người được trả lại -->
-                        <div class="mb-6">
-                            <h3 class="text-sm font-bold text-gray-600 mb-3 uppercase tracking-wider">
-                                <i class="fas fa-arrow-up text-green-500 mr-2"></i>Người Được Trả Lại
-                            </h3>
-                            <div id="summaryPaidList" class="space-y-3">
-                                <!-- Sẽ được điền bằng JavaScript -->
+                        <div id="expensesTab" class="tab-content">
+                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 px-1">Lịch sử chi tiêu</h3>
+                            <div id="expensesList" class="space-y-3">
+                                </div>
+                        </div>
+
+                        <div id="settlementTab" class="tab-content hidden">
+                            <div class="mb-6 bg-white rounded-xl p-1">
+                                <h3 class="text-xs font-bold text-teal-600 mb-3 uppercase tracking-wider flex items-center bg-teal-50 p-2 rounded-lg">
+                                    <i class="fas fa-arrow-up mr-2"></i>Cần thu về
+                                </h3>
+                                <div id="summaryPaidList" class="space-y-3 px-2">
+                                    </div>
                             </div>
-                        </div>
 
-                        <!-- Summary - Người phải trả -->
-                        <div class="mb-6">
-                            <h3 class="text-sm font-bold text-gray-600 mb-3 uppercase tracking-wider">
-                                <i class="fas fa-arrow-down text-red-500 mr-2"></i>Người Phải Trả
-                            </h3>
-                            <div id="summaryOwingList" class="space-y-3">
-                                <!-- Sẽ được điền bằng JavaScript -->
+                            <div class="mb-6 bg-white rounded-xl p-1">
+                                <h3 class="text-xs font-bold text-red-500 mb-3 uppercase tracking-wider flex items-center bg-red-50 p-2 rounded-lg">
+                                    <i class="fas fa-arrow-down mr-2"></i>Cần chi ra
+                                </h3>
+                                <div id="summaryOwingList" class="space-y-3 px-2">
+                                    </div>
                             </div>
-                        </div>
 
-                        <!-- Transactions -->
-                        <div class="border-t border-gray-200 pt-6">
-                            <h3 class="text-sm font-bold text-gray-600 mb-3 uppercase tracking-wider">
-                                <i class="fas fa-exchange-alt text-blue-500 mr-2"></i>Giao Dịch Cần Thực Hiện
-                            </h3>
-                            <div id="transactionsList" class="space-y-3">
-                                <!-- Sẽ được điền bằng JavaScript -->
+                            <div class="card p-4 bg-slate-800 text-white border-none">
+                                <h3 class="text-sm font-bold text-teal-300 mb-4 uppercase tracking-wider border-b border-slate-700 pb-2">
+                                    <i class="fas fa-exchange-alt mr-2"></i>Cách chuyển tiền tối ưu
+                                </h3>
+                                <div id="transactionsList" class="space-y-3">
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -493,12 +477,33 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="text-center py-6 text-gray-600 mt-12">
-        <p>Made with <i class="fas fa-heart text-red-500"></i> by Harish</p>
-        <p class="text-sm mt-2">Copyright © 2024-2026 EzzzSplit</p>
+    <footer class="text-center py-8 text-slate-500 mt-8 border-t border-slate-200 bg-white">
+        <p class="font-medium">Designed for EzzzSplit&Harish</p>
+        <p class="text-sm mt-1 opacity-75">Copyright © 2026</p>
     </footer>
 
+    <script>
+        // UI Logic cho Tab
+        document.querySelectorAll('button[data-tab]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Reset styles
+                document.querySelectorAll('button[data-tab]').forEach(b => {
+                    b.style.background = 'transparent';
+                    b.style.color = '#64748b';
+                    b.style.boxShadow = 'none';
+                });
+                // Set active style
+                btn.style.background = 'white';
+                btn.style.color = '#0f766e';
+                btn.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+                
+                // Hide all content
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+                // Show target content
+                document.getElementById(btn.dataset.tab + 'Tab').classList.remove('hidden');
+            });
+        });
+    </script>
     <script src="app.js"></script>
 </body>
 </html>
