@@ -650,7 +650,112 @@ function handleTabSwitch(tabName) {
     document.getElementById(tabName + 'Tab').classList.remove('hidden');
     event.currentTarget.classList.add('active');
 }
+// ============================================
+// EXPORT & SHARE TÍNH NĂNG
+// ============================================
 
+function handleExportSettlement() {
+    const personSummary = calculateExpenses();
+    const transactions = simplifyTransactions(personSummary);
+
+    // Kiểm tra nếu chưa có chi tiêu hoặc đã hòa tiền
+    if (appState.expenses.length === 0) {
+        alert("Chưa có chi tiêu nào để xuất báo cáo!");
+        return;
+    }
+    
+    if (transactions.length === 0) {
+        alert("Mọi người đã hòa tiền, không có công nợ để copy!");
+        return;
+    }
+
+    // Tính tổng bill
+    const totalExpense = appState.expenses.reduce((sum, e) => sum + e.amount, 0);
+    
+    // Soạn nội dung Text để gửi Messenger/Zalo
+    let textToCopy = `💸 TỔNG KẾT EZZZSPLIT 💸\n`;
+    textToCopy += `📊 Tổng chi phí nhóm: ${formatCurrency(totalExpense)}\n`;
+    textToCopy += `------------------------\n`;
+    textToCopy += `⚡ CHI TIẾT THANH TOÁN:\n`;
+
+    transactions.forEach(tx => {
+        textToCopy += `👉 ${tx.from} bank cho ${tx.to}: ${formatCurrency(tx.amount)}\n`;
+    });
+
+    textToCopy += `------------------------\n`;
+    textToCopy += `Anh em check kỹ và bank sớm nhé! 🍻`;
+
+    // Hàm đổi giao diện nút sau khi copy thành công
+    const updateButtonUI = () => {
+        const btn = document.getElementById('exportBtn');
+        if (btn) {
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check text-green-400 mr-2"></i>Đã Copy Thành Công!';
+            btn.classList.add('bg-slate-700');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('bg-slate-700');
+            }, 2000);
+        }
+    };
+
+    // KIỂM TRA MÔI TRƯỜNG ĐỂ CHỌN CÁCH COPY PHÙ HỢP
+    // Cách 1: API hiện đại (chỉ chạy trên HTTPS hoặc Localhost)
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(textToCopy)
+            .then(updateButtonUI)
+            .catch(err => {
+                console.warn('Lỗi API mới, chuyển sang cách copy dự phòng...', err);
+                fallbackCopy(textToCopy, updateButtonUI);
+            });
+    } else {
+        // Cách 2: Cách dự phòng (Chạy được khi click đúp mở file HTML bình thường)
+        fallbackCopy(textToCopy, updateButtonUI);
+    }
+}
+
+// HÀM COPY DỰ PHÒNG CHO FILE NỘI BỘ
+function fallbackCopy(text, successCallback) {
+    // Tạo một thẻ textarea ảo
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    
+    // Giấu nó đi khỏi màn hình để không làm giật UI
+    textArea.style.position = "fixed";
+    textArea.style.top = "-999999px";
+    textArea.style.left = "-999999px";
+    
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        // Thực thi lệnh copy của trình duyệt
+        const successful = document.execCommand('copy');
+        if (successful) {
+            successCallback();
+        } else {
+            alert("Trình duyệt của bạn chặn copy. Vui lòng thử lại!");
+        }
+    } catch (err) {
+        console.error('Fallback copy thất bại:', err);
+        alert("Lỗi copy. Trình duyệt không hỗ trợ!");
+    }
+    
+    // Xóa thẻ ảo đi
+    document.body.removeChild(textArea);
+}
+
+// Gắn sự kiện cho nút (nếu chưa có)
+document.addEventListener('DOMContentLoaded', () => {
+    const exportBtn = document.getElementById('exportBtn');
+    if (exportBtn) {
+        // Gỡ sự kiện cũ (tránh bị double click) và gắn sự kiện mới
+        exportBtn.replaceWith(exportBtn.cloneNode(true));
+        document.getElementById('exportBtn').addEventListener('click', handleExportSettlement);
+    }
+});
 // ============================================
 // INITIALIZATION
 // ============================================
