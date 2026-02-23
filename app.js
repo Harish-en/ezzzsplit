@@ -73,9 +73,9 @@ function addExpense(name, amount, paidBy, participants, isEqualSplit, paidBySpli
         id: Date.now(),
         name,
         amount: roundAmount(amount),
-        paidBy, 
-        paidBySplitMode, 
-        paidByAmounts, 
+        paidBy,
+        paidBySplitMode,
+        paidByAmounts,
         participants,
         isEqualSplit,
         date: new Date().toLocaleDateString('vi-VN')
@@ -123,7 +123,7 @@ function loadState() {
 
 function calculateExpenses() {
     const personSummary = {};
-    
+
     appState.members.forEach(member => {
         personSummary[member] = {
             name: member,
@@ -132,11 +132,11 @@ function calculateExpenses() {
             balance: 0
         };
     });
-    
+
     appState.expenses.forEach(expense => {
         const amount = expense.amount;
         const numPaidBy = expense.paidBy.length;
-        
+
         let paidAmounts = {};
         if (numPaidBy > 1 && expense.paidBySplitMode === 'custom' && expense.paidByAmounts) {
             paidAmounts = expense.paidByAmounts;
@@ -146,13 +146,13 @@ function calculateExpenses() {
                 paidAmounts[payer] = amountPerPayer;
             });
         }
-        
+
         expense.paidBy.forEach(payer => {
             if (personSummary[payer]) {
                 personSummary[payer].totalPaid += paidAmounts[payer] || 0;
             }
         });
-        
+
         if (expense.isEqualSplit) {
             const sharePerPerson = amount / expense.participants.length;
             expense.participants.forEach(p => {
@@ -168,51 +168,51 @@ function calculateExpenses() {
             });
         }
     });
-    
+
     Object.values(personSummary).forEach(person => {
         // Làm tròn balance cuối cùng để tránh lỗi số học dấu phẩy động (vd: 0.000000001)
         person.balance = roundAmount(person.totalPaid - person.totalShare);
         person.totalPaid = roundAmount(person.totalPaid);
         person.totalShare = roundAmount(person.totalShare);
     });
-    
+
     return personSummary;
 }
 
 function simplifyTransactions(personSummary) {
     const transactions = [];
     const balances = {};
-    
+
     Object.values(personSummary).forEach(person => {
         if (Math.abs(person.balance) >= 1) { // Bỏ qua các khoản lệch quá nhỏ (dưới 1 VNĐ)
             balances[person.name] = person.balance;
         }
     });
-    
+
     while (Object.keys(balances).length > 0) {
         const debtor = Object.entries(balances).find(([_, b]) => b < 0);
         const creditor = Object.entries(balances).find(([_, b]) => b > 0);
-        
+
         if (!debtor || !creditor) break;
-        
+
         const [debtorName, debtAmount] = debtor;
         const [creditorName, creditAmount] = creditor;
-        
+
         const amount = Math.min(Math.abs(debtAmount), creditAmount);
-        
+
         transactions.push({
             from: debtorName,
             to: creditorName,
             amount: roundAmount(amount)
         });
-        
+
         balances[debtorName] += amount;
         balances[creditorName] -= amount;
-        
+
         if (Math.abs(balances[debtorName]) < 1) delete balances[debtorName];
         if (Math.abs(balances[creditorName]) < 1) delete balances[creditorName];
     }
-    
+
     return transactions;
 }
 
@@ -222,12 +222,12 @@ function simplifyTransactions(personSummary) {
 
 function validateExpenseForm(name, amount, paidBy, participants, isEqualSplit, paidBySplitMode, paidByAmounts) {
     const errors = [];
-    
+
     if (!name || name.trim() === '') errors.push('Vui lòng nhập tên chi tiêu');
     if (!amount || amount <= 0) errors.push('Vui lòng nhập số tiền hợp lệ lớn hơn 0');
     if (!paidBy || paidBy.length === 0) errors.push('Vui lòng chọn người trả tiền');
     if (!participants || participants.length === 0) errors.push('Vui lòng chọn người tham gia');
-    
+
     // Validate người thanh toán tùy chỉnh
     if (paidBy.length > 1 && paidBySplitMode === 'custom') {
         const totalPaidBy = Object.values(paidByAmounts).reduce((sum, val) => sum + val, 0);
@@ -243,7 +243,7 @@ function validateExpenseForm(name, amount, paidBy, participants, isEqualSplit, p
             errors.push(`Tổng tiền chia tùy chỉnh (${formatCurrency(total)}) phải khớp với tổng hóa đơn (${formatCurrency(amount)}).`);
         }
     }
-    
+
     return errors;
 }
 
@@ -255,19 +255,19 @@ function renderMembers() {
     const membersList = document.getElementById('membersList');
     const paidByList = document.getElementById('paidByList');
     const participantsList = document.getElementById('participantsList');
-    
+
     const currentPaidBy = new Set();
     document.querySelectorAll('.paidBy-checkbox:checked').forEach(checkbox => {
         currentPaidBy.add(checkbox.value);
     });
-    
+
     membersList.innerHTML = '';
     paidByList.innerHTML = '';
     participantsList.innerHTML = '';
-    
+
     appState.members.forEach(member => {
         const safeMember = escapeHTML(member);
-        
+
         const memberChip = document.createElement('div');
         memberChip.className = 'member-chip';
         memberChip.innerHTML = `
@@ -278,7 +278,7 @@ function renderMembers() {
             </button>
         `;
         membersList.appendChild(memberChip);
-        
+
         const isChecked = currentPaidBy.has(member) ? 'checked' : '';
         const paidByItem = document.createElement('label');
         paidByItem.className = 'flex items-center cursor-pointer p-2 hover:bg-gray-100 rounded transition';
@@ -287,7 +287,7 @@ function renderMembers() {
             <span class="text-sm font-medium text-gray-700">${safeMember}</span>
         `;
         paidByList.appendChild(paidByItem);
-        
+
         const participantItem = document.createElement('label');
         participantItem.className = 'flex items-center cursor-pointer p-2 hover:bg-gray-100 rounded transition';
         participantItem.innerHTML = `
@@ -297,28 +297,28 @@ function renderMembers() {
         `;
         participantsList.appendChild(participantItem);
     });
-    
+
     updateSplitMode();
 }
 
 function renderExpenses() {
     const expensesList = document.getElementById('expensesList');
     expensesList.innerHTML = '';
-    
+
     if (appState.expenses.length === 0) {
         expensesList.innerHTML = '<div class="empty-state text-center py-6"><i class="fas fa-inbox text-4xl text-slate-300 mb-2 block"></i><p class="text-gray-500 text-sm">Chưa có chi tiêu nào</p></div>';
         return;
     }
-    
+
     // Đảo ngược danh sách để bill mới nhất lên đầu
     [...appState.expenses].reverse().forEach(expense => {
         const expenseCard = document.createElement('div');
         expenseCard.className = 'card bg-white p-4 mb-3 hover:shadow-md transition';
-        
+
         const safeName = escapeHTML(expense.name);
         const paidByText = escapeHTML(expense.paidBy.join(', '));
         const participantsText = escapeHTML(expense.participants.map(p => p.name).join(', '));
-        
+
         expenseCard.innerHTML = `
             <div class="flex justify-between items-start mb-3">
                 <div>
@@ -340,7 +340,7 @@ function renderExpenses() {
                 </button>
             </div>
         `;
-        
+
         expensesList.appendChild(expenseCard);
     });
 }
@@ -350,21 +350,21 @@ function renderSettlement() {
     const summaryPaidList = document.getElementById('summaryPaidList');
     const summaryOwingList = document.getElementById('summaryOwingList');
     const transactionsList = document.getElementById('transactionsList');
-    
+
     const personSummary = calculateExpenses();
     const transactions = simplifyTransactions(personSummary);
-    
+
     const paidList = [];
     const owingList = [];
-    
+
     Object.values(personSummary).forEach(person => {
         if (person.balance > 0) paidList.push(person);
         else if (person.balance < 0) owingList.push(person);
     });
-    
+
     paidList.sort((a, b) => b.balance - a.balance);
     owingList.sort((a, b) => a.balance - b.balance);
-    
+
     // Render Cần thu về (Người được trả lại)
     summaryPaidList.innerHTML = paidList.length > 0 ? paidList.map(person => `
         <div class="flex items-center justify-between p-2 bg-slate-50 rounded-lg">
@@ -422,12 +422,12 @@ function updatePaidByAmountsDisplay() {
     const isCustom = document.getElementById("paidBySplitCustom").checked;
     const container = document.getElementById("paidByAmountsContainer");
     const inputsDiv = document.getElementById("paidByAmountsInputs");
-    
+
     if (isCustom) {
         container.classList.remove("hidden");
         const paidByCheckboxes = document.querySelectorAll(".paidBy-checkbox:checked");
         const payers = Array.from(paidByCheckboxes).map(cb => cb.value);
-        
+
         inputsDiv.innerHTML = "";
         payers.forEach(payer => {
             const safePayer = escapeHTML(payer);
@@ -455,7 +455,7 @@ function updatePaidByAmountsTotal() {
     });
     const totalEl = document.getElementById("paidByAmountsTotal");
     totalEl.textContent = formatCurrency(total);
-    
+
     const targetAmount = parseFloat(document.getElementById('expenseAmount').value) || 0;
     if (total !== targetAmount && targetAmount > 0) {
         totalEl.classList.remove('text-teal-600');
@@ -469,7 +469,7 @@ function updatePaidByAmountsTotal() {
 function updatePaidBySplitModeVisibility() {
     const paidByCount = document.querySelectorAll('.paidBy-checkbox:checked').length;
     const section = document.getElementById('paidBySplitModeSection');
-    
+
     if (paidByCount > 1) {
         section.classList.remove('hidden');
     } else {
@@ -482,11 +482,11 @@ function updatePaidBySplitModeVisibility() {
 function updateSplitMode() {
     const isEqualSplit = document.getElementById('splitEqual').checked;
     const labels = document.querySelectorAll('#participantsList label');
-    
+
     labels.forEach(label => {
         const checkbox = label.querySelector('.participant-checkbox');
         const shareInput = label.querySelector('.share-input');
-        
+
         if (shareInput) {
             if (isEqualSplit || !checkbox.checked) {
                 shareInput.classList.add('hidden');
@@ -521,35 +521,35 @@ function handleRemoveMember(name) {
 // Gom DOM Operations vào đây
 function handleAddExpense(event) {
     event.preventDefault();
-    
+
     const name = document.getElementById('expenseName').value;
     const amount = parseFloat(document.getElementById('expenseAmount').value);
     const paidBy = Array.from(document.querySelectorAll('.paidBy-checkbox:checked')).map(cb => cb.value);
     const isEqualSplit = document.getElementById('splitEqual').checked;
-    
+
     const paidBySplitMode = document.getElementById('paidBySplitEqual').checked ? 'equal' : 'custom';
     let paidByAmounts = {};
-    
+
     if (paidBySplitMode === 'custom') {
         document.querySelectorAll('.paidByAmount-input').forEach(input => {
             const payer = input.getAttribute('data-payer');
             paidByAmounts[payer] = roundAmount(parseFloat(input.value) || 0);
         });
     }
-    
+
     const participants = [];
     document.querySelectorAll('.participant-checkbox:checked').forEach(checkbox => {
         const share = isEqualSplit ? 0 : roundAmount(parseFloat(document.getElementById(`share_${checkbox.value}`).value) || 0);
         participants.push({ name: checkbox.value, share: share });
     });
-    
+
     const errors = validateExpenseForm(name, amount, paidBy, participants, isEqualSplit, paidBySplitMode, paidByAmounts);
-    
+
     if (errors.length > 0) {
         alert('Vui lòng kiểm tra lại:\n\n- ' + errors.join('\n- '));
         return;
     }
-    
+
     if (editingExpenseId) {
         updateExpense(editingExpenseId, name, amount, paidBy, participants, isEqualSplit, paidBySplitMode, paidByAmounts);
         editingExpenseId = null;
@@ -557,7 +557,7 @@ function handleAddExpense(event) {
     } else {
         addExpense(name, amount, paidBy, participants, isEqualSplit, paidBySplitMode, paidByAmounts);
     }
-    
+
     resetForm();
     updateDisplay();
 }
@@ -565,25 +565,25 @@ function handleAddExpense(event) {
 function handleEditExpense(id) {
     const expense = appState.expenses.find(e => e.id === id);
     if (!expense) return;
-    
+
     editingExpenseId = id; // Gắn cờ Edit thay vì Xóa ngay lập tức
-    
+
     document.getElementById('expenseName').value = expense.name;
     document.getElementById('expenseAmount').value = expense.amount;
-    
+
     // Set paidBy
     document.querySelectorAll('.paidBy-checkbox').forEach(cb => {
         cb.checked = expense.paidBy.includes(cb.value);
     });
-    
+
     if (expense.paidBySplitMode === 'custom') {
         document.getElementById('paidBySplitCustom').checked = true;
     } else {
         document.getElementById('paidBySplitEqual').checked = true;
     }
-    
+
     updatePaidBySplitModeVisibility();
-    
+
     // Fill custom paidAmounts if exist
     if (expense.paidBySplitMode === 'custom' && expense.paidByAmounts) {
         document.querySelectorAll('.paidByAmount-input').forEach(input => {
@@ -594,32 +594,32 @@ function handleEditExpense(id) {
         });
         updatePaidByAmountsTotal();
     }
-    
+
     // Set participants
     document.querySelectorAll('.participant-checkbox').forEach(cb => {
         const isParticipant = expense.participants.some(p => p.name === cb.value);
         cb.checked = isParticipant;
-        
+
         if (!expense.isEqualSplit && isParticipant) {
             const share = expense.participants.find(p => p.name === cb.value).share;
             document.getElementById(`share_${cb.value}`).value = share;
         }
     });
-    
+
     if (expense.isEqualSplit) {
         document.getElementById('splitEqual').checked = true;
     } else {
         document.getElementById('splitCustom').checked = true;
     }
-    
+
     updateSplitMode();
-    
+
     // Đổi UI Submit Button
     const submitBtn = document.querySelector('button[type="submit"]');
     submitBtn.innerHTML = '<i class="fas fa-edit mr-2"></i>Cập Nhật Khoản Chi';
     submitBtn.classList.add('animate-pulse');
     setTimeout(() => submitBtn.classList.remove('animate-pulse'), 1000);
-    
+
     document.getElementById('expenseForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -636,17 +636,17 @@ function resetForm() {
     document.getElementById('splitEqual').checked = true;
     document.getElementById('paidBySplitEqual').checked = true;
     editingExpenseId = null;
-    
+
     const submitBtn = document.querySelector('button[type="submit"]');
     submitBtn.innerHTML = '<i class="fas fa-save mr-2"></i>Lưu Khoản Chi';
-    
+
     updateDisplay(); // Chạy lại để reset checkbox về mặc định
 }
 
 function handleTabSwitch(tabName) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
     document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-    
+
     document.getElementById(tabName + 'Tab').classList.remove('hidden');
     event.currentTarget.classList.add('active');
 }
@@ -663,7 +663,7 @@ function handleExportSettlement() {
         alert("Chưa có chi tiêu nào để xuất báo cáo!");
         return;
     }
-    
+
     if (transactions.length === 0) {
         alert("Mọi người đã hòa tiền, không có công nợ để copy!");
         return;
@@ -671,7 +671,7 @@ function handleExportSettlement() {
 
     // Tính tổng bill
     const totalExpense = appState.expenses.reduce((sum, e) => sum + e.amount, 0);
-    
+
     // Soạn nội dung Text để gửi Messenger/Zalo
     let textToCopy = `💸 TỔNG KẾT EZZZSPLIT 💸\n`;
     textToCopy += `📊 Tổng chi phí nhóm: ${formatCurrency(totalExpense)}\n`;
@@ -692,7 +692,7 @@ function handleExportSettlement() {
             const originalHTML = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-check text-green-400 mr-2"></i>Đã Copy Thành Công!';
             btn.classList.add('bg-slate-700');
-            
+
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
                 btn.classList.remove('bg-slate-700');
@@ -720,16 +720,16 @@ function fallbackCopy(text, successCallback) {
     // Tạo một thẻ textarea ảo
     const textArea = document.createElement("textarea");
     textArea.value = text;
-    
+
     // Giấu nó đi khỏi màn hình để không làm giật UI
     textArea.style.position = "fixed";
     textArea.style.top = "-999999px";
     textArea.style.left = "-999999px";
-    
+
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
-    
+
     try {
         // Thực thi lệnh copy của trình duyệt
         const successful = document.execCommand('copy');
@@ -742,18 +742,24 @@ function fallbackCopy(text, successCallback) {
         console.error('Fallback copy thất bại:', err);
         alert("Lỗi copy. Trình duyệt không hỗ trợ!");
     }
-    
+
     // Xóa thẻ ảo đi
     document.body.removeChild(textArea);
 }
 
 // Gắn sự kiện cho nút (nếu chưa có)
 document.addEventListener('DOMContentLoaded', () => {
-    const exportBtn = document.getElementById('exportBtn');
-    if (exportBtn) {
-        // Gỡ sự kiện cũ (tránh bị double click) và gắn sự kiện mới
-        exportBtn.replaceWith(exportBtn.cloneNode(true));
-        document.getElementById('exportBtn').addEventListener('click', handleExportSettlement);
+    // LOGIC CHO NÚT CHỌN TẤT CẢ
+    const selectAllBtn = document.getElementById('selectAllParticipants');
+    if (selectAllBtn) {
+        selectAllBtn.addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            // Lấy tất cả các ô checkbox của người tham gia và đổi trạng thái theo nút "Chọn tất cả"
+            document.querySelectorAll('.participant-checkbox').forEach(cb => {
+                cb.checked = isChecked;
+            });
+            updateSplitMode(); // Cập nhật lại giao diện chia tiền
+        });
     }
 });
 // ============================================
@@ -762,46 +768,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     loadState();
-    
+
     const expenseForm = document.getElementById('expenseForm');
     expenseForm.addEventListener('submit', handleAddExpense);
-    
+
     // Bắt sự kiện Reset form
     expenseForm.addEventListener('reset', (e) => {
         e.preventDefault();
         resetForm();
     });
-    
+
     document.getElementById('expenseAmount').addEventListener('input', updatePaidByAmountsTotal);
-    
+
     document.getElementById('addMemberBtn').addEventListener('click', () => {
         const input = document.getElementById('newMemberName');
         if (input.value.trim()) handleAddMember();
     });
-    
+
     document.getElementById('newMemberName').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             handleAddMember();
         }
     });
-    
+
     document.getElementById('splitEqual').addEventListener('change', updateSplitMode);
     document.getElementById('splitCustom').addEventListener('change', updateSplitMode);
-    
+
     document.getElementById('paidBySplitEqual').addEventListener('change', updatePaidByAmountsDisplay);
     document.getElementById('paidBySplitCustom').addEventListener('change', updatePaidByAmountsDisplay);
-    
-    // Thay vì gắn event inline, sử dụng Event Delegation cho các checkbox tạo động
+
+    // Lắng nghe sự thay đổi của các checkbox con
     document.addEventListener('change', (e) => {
         if (e.target.classList.contains('participant-checkbox')) {
             updateSplitMode();
+
+            // Tự động cập nhật trạng thái nút "Chọn tất cả"
+            const allCheckboxes = document.querySelectorAll('.participant-checkbox');
+            const checkedCheckboxes = document.querySelectorAll('.participant-checkbox:checked');
+            const selectAllBtn = document.getElementById('selectAllParticipants');
+
+            if (selectAllBtn) {
+                // Nếu số lượng ô được tick bằng tổng số ô -> Chọn tất cả = true
+                selectAllBtn.checked = (allCheckboxes.length > 0 && allCheckboxes.length === checkedCheckboxes.length);
+            }
         }
         if (e.target.classList.contains('paidBy-checkbox')) {
             updatePaidBySplitModeVisibility();
         }
     });
-    
+
     // UI Logic cho Tab bên phải (override code trong thẻ <script> của HTML)
     document.querySelectorAll('button[data-tab]').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -814,11 +830,11 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.style.background = 'white';
             btn.style.color = '#0f766e';
             btn.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
-            
+
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             document.getElementById(tabName + 'Tab').classList.remove('hidden');
         });
     });
-    
+
     updateDisplay();
 });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -36,13 +37,13 @@
         * {
             font-family: 'Inter', sans-serif;
         }
-        
+
         body {
             background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
             min-height: 100vh;
             color: #334155;
         }
-        
+
         .card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -51,12 +52,12 @@
             border-radius: 16px;
             transition: all 0.3s ease;
         }
-        
+
         .card:hover {
             transform: translateY(-2px);
             box-shadow: 0 20px 40px -12px rgba(13, 148, 136, 0.2);
         }
-        
+
         .btn-primary {
             background: linear-gradient(135deg, #2dd4bf 0%, #0f766e 100%);
             color: white;
@@ -69,17 +70,17 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 16px rgba(13, 148, 136, 0.4);
             filter: brightness(1.05);
         }
-        
+
         .btn-primary:active {
             transform: translateY(0);
         }
-        
+
         .btn-secondary {
             background: white;
             color: #475569;
@@ -90,7 +91,7 @@
             font-weight: 500;
             transition: all 0.3s ease;
         }
-        
+
         .btn-secondary:hover {
             background: #f1f5f9;
             border-color: #94a3b8;
@@ -106,14 +107,14 @@
             transition: all 0.3s ease;
             width: 100%;
         }
-        
+
         .input-field:focus {
             outline: none;
             border-color: #2dd4bf;
             background: white;
             box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.15);
         }
-        
+
         /* Stepper Styling */
         .stepper {
             display: flex;
@@ -121,7 +122,7 @@
             margin-bottom: 32px;
             position: relative;
         }
-        
+
         .stepper-item {
             display: flex;
             flex-direction: column;
@@ -129,7 +130,7 @@
             flex: 1;
             z-index: 2;
         }
-        
+
         .stepper-number {
             width: 36px;
             height: 36px;
@@ -144,7 +145,7 @@
             margin-bottom: 8px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .stepper-item.active .stepper-number {
             background: white;
             border-color: #0d9488;
@@ -152,28 +153,28 @@
             box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
             transform: scale(1.1);
         }
-        
+
         .stepper-item.completed .stepper-number {
             background: #0d9488;
             border-color: #0d9488;
             color: white;
         }
-        
+
         .stepper-line {
             flex: 1;
             height: 3px;
             background: #e2e8f0;
-            margin: 0 -10px; 
+            margin: 0 -10px;
             z-index: 1;
             border-radius: 2px;
             position: relative;
-            top: -14px; 
+            top: -14px;
         }
-        
-        .stepper-item.completed + .stepper-line {
+
+        .stepper-item.completed+.stepper-line {
             background: #2dd4bf;
         }
-        
+
         .stepper-label {
             font-size: 12px;
             color: #64748b;
@@ -181,7 +182,7 @@
             font-weight: 600;
             transition: color 0.3s;
         }
-        
+
         .stepper-item.active .stepper-label {
             color: #0d9488;
         }
@@ -200,7 +201,7 @@
             border: 1px solid #5eead4;
             animation: slideIn 0.3s ease;
         }
-        
+
         .member-avatar {
             width: 20px;
             height: 20px;
@@ -221,26 +222,26 @@
             padding: 16px;
             margin-bottom: 12px;
             border: 1px solid #f1f5f9;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             position: relative;
             overflow: hidden;
         }
-        
+
         .settlement-card.paid {
             background: #f0fdf4;
             border-left: 4px solid #22c55e;
         }
-        
+
         .settlement-card.owing {
             background: #fef2f2;
             border-left: 4px solid #ef4444;
         }
 
         /* Cải tiến UI: Radio Button Focus */
-        input[type="radio"]:checked + div {
+        input[type="radio"]:checked+div {
             color: #0d9488;
         }
-        
+
         label:has(input[type="radio"]:checked) {
             border-color: #0d9488;
             background-color: #f0fdfa;
@@ -251,27 +252,39 @@
         ::-webkit-scrollbar {
             width: 6px;
         }
+
         ::-webkit-scrollbar-track {
-            background: #f1f5f9; 
+            background: #f1f5f9;
         }
+
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
+            background: #cbd5e1;
             border-radius: 3px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
+            background: #94a3b8;
         }
 
         /* Hiệu ứng mượt mà */
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .animate-fade {
             animation: slideIn 0.3s ease-out forwards;
         }
     </style>
 </head>
+
 <body>
     <div class="min-h-screen py-8 px-4">
         <div class="max-w-6xl mx-auto">
@@ -286,12 +299,13 @@
                 <div class="lg:col-span-2 space-y-6">
                     <div class="card p-8">
                         <h2 class="text-2xl font-bold text-slate-800 mb-8 flex items-center">
-                            <span class="bg-teal-100 text-teal-600 w-10 h-10 rounded-xl flex items-center justify-center mr-3 text-lg shadow-sm">
+                            <span
+                                class="bg-teal-100 text-teal-600 w-10 h-10 rounded-xl flex items-center justify-center mr-3 text-lg shadow-sm">
                                 <i class="fas fa-plus"></i>
                             </span>
                             Thêm Chi Tiêu Mới
                         </h2>
-                        
+
                         <div class="stepper">
                             <div class="stepper-item active">
                                 <div class="stepper-number">1</div>
@@ -313,22 +327,26 @@
                                 <div class="stepper-label">Lưu</div>
                             </div>
                         </div>
-                        
+
                         <form id="expenseForm" class="space-y-6">
                             <div class="step-1">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
-                                        <label class="block text-sm font-semibold text-slate-700 mb-2">Tên khoản chi *</label>
+                                        <label class="block text-sm font-semibold text-slate-700 mb-2">Tên khoản chi
+                                            *</label>
                                         <div class="relative">
                                             <i class="fas fa-tag absolute left-4 top-3.5 text-slate-400"></i>
-                                            <input type="text" id="expenseName" class="input-field pl-10" placeholder="VD: Ăn trưa, Karaoke..." required>
+                                            <input type="text" id="expenseName" class="input-field pl-10"
+                                                placeholder="VD: Ăn trưa, Karaoke..." required>
                                         </div>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-semibold text-slate-700 mb-2">Số tiền (VNĐ) *</label>
+                                        <label class="block text-sm font-semibold text-slate-700 mb-2">Số tiền (VNĐ)
+                                            *</label>
                                         <div class="relative">
                                             <span class="absolute left-4 top-3.5 text-slate-400 font-bold">₫</span>
-                                            <input type="number" id="expenseAmount" class="input-field pl-10" placeholder="0" min="0" step="1000" required>
+                                            <input type="number" id="expenseAmount" class="input-field pl-10"
+                                                placeholder="0" min="0" step="1000" required>
                                         </div>
                                     </div>
                                 </div>
@@ -339,54 +357,76 @@
                                     <i class="fas fa-wallet mr-2"></i>Người thanh toán
                                 </label>
                                 <div id="paidByList" class="space-y-2">
-                                    </div>
-                                
+                                </div>
+
                                 <div id="paidBySplitModeSection" class="hidden mt-4 pt-4 border-t border-slate-200">
                                     <div class="flex items-center justify-between mb-3">
                                         <span class="text-sm font-medium text-slate-600">Chế độ chia:</span>
-                                        <div class="flex items-center gap-4 bg-white p-1 rounded-lg border border-slate-200">
-                                            <label class="cursor-pointer px-3 py-1 hover:text-teal-600 transition-colors">
-                                                <input type="radio" id="paidBySplitEqual" name="paidBySplitMode" value="equal" checked class="mr-1 accent-teal-600">
+                                        <div
+                                            class="flex items-center gap-4 bg-white p-1 rounded-lg border border-slate-200">
+                                            <label
+                                                class="cursor-pointer px-3 py-1 hover:text-teal-600 transition-colors">
+                                                <input type="radio" id="paidBySplitEqual" name="paidBySplitMode"
+                                                    value="equal" checked class="mr-1 accent-teal-600">
                                                 <span class="text-sm">Đều nhau</span>
                                             </label>
-                                            <label class="cursor-pointer px-3 py-1 hover:text-teal-600 transition-colors">
-                                                <input type="radio" id="paidBySplitCustom" name="paidBySplitMode" value="custom" class="mr-1 accent-teal-600">
+                                            <label
+                                                class="cursor-pointer px-3 py-1 hover:text-teal-600 transition-colors">
+                                                <input type="radio" id="paidBySplitCustom" name="paidBySplitMode"
+                                                    value="custom" class="mr-1 accent-teal-600">
                                                 <span class="text-sm">Tùy chỉnh</span>
                                             </label>
                                         </div>
                                     </div>
-                                    
-                                    <div id="paidByAmountsContainer" class="hidden p-4 bg-teal-50/50 rounded-lg border border-teal-100 space-y-3 animate-fade">
+
+                                    <div id="paidByAmountsContainer"
+                                        class="hidden p-4 bg-teal-50/50 rounded-lg border border-teal-100 space-y-3 animate-fade">
                                         <div id="paidByAmountsInputs" class="space-y-2">
-                                            </div>
-                                        <div class="flex justify-between items-center text-sm font-medium pt-2 border-t border-teal-200 text-teal-800">
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center text-sm font-medium pt-2 border-t border-teal-200 text-teal-800">
                                             <span>Tổng nhập:</span>
-                                            <span id="paidByAmountsTotal" class="font-bold text-lg text-teal-600">0 ₫</span>
+                                            <span id="paidByAmountsTotal" class="font-bold text-lg text-teal-600">0
+                                                ₫</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="step-3 bg-slate-50 p-5 rounded-xl border border-slate-100">
-                                <label class="block text-sm font-semibold text-teal-700 mb-3 uppercase tracking-wide">
-                                    <i class="fas fa-users mr-2"></i>Người tham gia
-                                </label>
-                                <div id="participantsList" class="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-                                    </div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <label class="block text-sm font-semibold text-teal-700 uppercase tracking-wide">
+                                        <i class="fas fa-users mr-2"></i>Người tham gia
+                                    </label>
+                                    <label
+                                        class="flex items-center cursor-pointer text-sm text-teal-600 font-semibold hover:text-teal-700 bg-teal-100/50 px-3 py-1.5 rounded-lg transition-colors">
+                                        <input type="checkbox" id="selectAllParticipants" class="mr-2 accent-teal-600"
+                                            checked>
+                                        Chọn tất cả
+                                    </label>
+                                </div>
+                                <div id="participantsList"
+                                    class="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                                </div>
                             </div>
 
                             <div class="step-4">
-                                <label class="block text-sm font-semibold text-slate-700 mb-3">Phương thức chia sẻ *</label>
+                                <label class="block text-sm font-semibold text-slate-700 mb-3">Phương thức chia sẻ
+                                    *</label>
                                 <div class="grid grid-cols-2 gap-4">
-                                    <label class="relative flex items-center justify-center p-4 border border-slate-200 bg-white rounded-xl cursor-pointer hover:bg-slate-50 transition-all">
-                                        <input type="radio" id="splitEqual" name="splitMode" value="equal" checked class="absolute top-3 right-3 accent-teal-600">
+                                    <label
+                                        class="relative flex items-center justify-center p-4 border border-slate-200 bg-white rounded-xl cursor-pointer hover:bg-slate-50 transition-all">
+                                        <input type="radio" id="splitEqual" name="splitMode" value="equal" checked
+                                            class="absolute top-3 right-3 accent-teal-600">
                                         <div class="text-center text-slate-500">
                                             <i class="fas fa-equals text-xl mb-1"></i>
                                             <div class="text-sm font-bold">Chia đều</div>
                                         </div>
                                     </label>
-                                    <label class="relative flex items-center justify-center p-4 border border-slate-200 bg-white rounded-xl cursor-pointer hover:bg-slate-50 transition-all">
-                                        <input type="radio" id="splitCustom" name="splitMode" value="custom" class="absolute top-3 right-3 accent-teal-600">
+                                    <label
+                                        class="relative flex items-center justify-center p-4 border border-slate-200 bg-white rounded-xl cursor-pointer hover:bg-slate-50 transition-all">
+                                        <input type="radio" id="splitCustom" name="splitMode" value="custom"
+                                            class="absolute top-3 right-3 accent-teal-600">
                                         <div class="text-center text-slate-500">
                                             <i class="fas fa-pencil-alt text-xl mb-1"></i>
                                             <div class="text-sm font-bold">Tùy chỉnh</div>
@@ -396,10 +436,12 @@
                             </div>
 
                             <div class="flex gap-4 pt-6 mt-4 border-t border-slate-100">
-                                <button type="submit" class="btn-primary flex-1 flex items-center justify-center text-lg">
+                                <button type="submit"
+                                    class="btn-primary flex-1 flex items-center justify-center text-lg">
                                     <i class="fas fa-save mr-2"></i>Lưu Khoản Chi
                                 </button>
-                                <button type="reset" class="btn-secondary w-1/4 flex items-center justify-center text-slate-500 hover:text-red-500 hover:border-red-200 hover:bg-red-50">
+                                <button type="reset"
+                                    class="btn-secondary w-1/4 flex items-center justify-center text-slate-500 hover:text-red-500 hover:border-red-200 hover:bg-red-50">
                                     <i class="fas fa-times mr-2"></i>Hủy
                                 </button>
                             </div>
@@ -410,63 +452,75 @@
                         <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center">
                             <i class="fas fa-user-friends text-teal-500 mr-2"></i>Thành viên nhóm
                         </h2>
-                        
+
                         <div class="flex gap-3 mb-6">
-                            <input type="text" id="newMemberName" class="input-field flex-1" placeholder="Nhập tên thành viên...">
-                            <button id="addMemberBtn" class="bg-teal-100 text-teal-700 hover:bg-teal-200 px-5 py-2 rounded-lg font-semibold transition-colors">
+                            <input type="text" id="newMemberName" class="input-field flex-1"
+                                placeholder="Nhập tên thành viên...">
+                            <button id="addMemberBtn"
+                                class="bg-teal-100 text-teal-700 hover:bg-teal-200 px-5 py-2 rounded-lg font-semibold transition-colors">
                                 <i class="fas fa-user-plus"></i>
                             </button>
                         </div>
 
                         <div id="membersList" class="flex flex-wrap gap-2">
-                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="lg:col-span-1">
                     <div class="sticky top-6">
                         <div class="flex p-1 bg-slate-200 rounded-xl mb-6 shadow-inner">
-                            <button class="flex-1 py-2 px-4 rounded-lg text-sm font-semibold text-slate-600 transition-all active-tab-style" data-tab="expenses" style="background: white; color: #0f766e; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                            <button
+                                class="flex-1 py-2 px-4 rounded-lg text-sm font-semibold text-slate-600 transition-all active-tab-style"
+                                data-tab="expenses"
+                                style="background: white; color: #0f766e; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
                                 <i class="fas fa-receipt mr-2"></i>Danh sách
                             </button>
-                            <button class="flex-1 py-2 px-4 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-700 transition-all" data-tab="settlement">
+                            <button
+                                class="flex-1 py-2 px-4 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-700 transition-all"
+                                data-tab="settlement">
                                 <i class="fas fa-calculator mr-2"></i>Công nợ
                             </button>
                         </div>
 
                         <div id="expensesTab" class="tab-content animate-fade">
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 px-1">Lịch sử chi tiêu</h3>
+                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 px-1">Lịch sử chi
+                                tiêu</h3>
                             <div id="expensesList" class="space-y-3">
-                                </div>
+                            </div>
                         </div>
 
                         <div id="settlementTab" class="tab-content hidden animate-fade">
                             <div class="mb-6 bg-white rounded-xl p-1 shadow-sm border border-slate-100">
-                                <h3 class="text-xs font-bold text-teal-600 mb-3 uppercase tracking-wider flex items-center bg-teal-50 p-2 rounded-lg">
+                                <h3
+                                    class="text-xs font-bold text-teal-600 mb-3 uppercase tracking-wider flex items-center bg-teal-50 p-2 rounded-lg">
                                     <i class="fas fa-arrow-down mr-2"></i>Cần thu về
                                 </h3>
                                 <div id="summaryPaidList" class="space-y-3 px-2 pb-2">
-                                    </div>
+                                </div>
                             </div>
 
                             <div class="mb-6 bg-white rounded-xl p-1 shadow-sm border border-slate-100">
-                                <h3 class="text-xs font-bold text-red-500 mb-3 uppercase tracking-wider flex items-center bg-red-50 p-2 rounded-lg">
+                                <h3
+                                    class="text-xs font-bold text-red-500 mb-3 uppercase tracking-wider flex items-center bg-red-50 p-2 rounded-lg">
                                     <i class="fas fa-arrow-up mr-2"></i>Cần chi ra
                                 </h3>
                                 <div id="summaryOwingList" class="space-y-3 px-2 pb-2">
-                                    </div>
+                                </div>
                             </div>
 
                             <div class="card p-4 bg-slate-800 text-white border-none shadow-xl">
-                                <h3 class="text-sm font-bold text-teal-300 mb-4 uppercase tracking-wider border-b border-slate-700 pb-2">
+                                <h3
+                                    class="text-sm font-bold text-teal-300 mb-4 uppercase tracking-wider border-b border-slate-700 pb-2">
                                     <i class="fas fa-exchange-alt mr-2"></i>Cách chuyển tiền tối ưu
                                 </h3>
                                 <div id="transactionsList" class="space-y-3">
-                                    </div>
+                                </div>
                             </div>
-                            
+
                             <div class="mt-6">
-                                <button id="exportBtn" class="w-full bg-slate-800 text-teal-400 hover:bg-slate-700 hover:text-teal-300 font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center">
+                                <button id="exportBtn"
+                                    class="w-full bg-slate-800 text-teal-400 hover:bg-slate-700 hover:text-teal-300 font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center">
                                     <i class="fas fa-copy mr-2"></i>Copy Báo Cáo Gửi Zalo
                                 </button>
                             </div>
@@ -484,4 +538,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>
