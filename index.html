@@ -35,268 +35,193 @@
     </script>
 
     <style>
-        * {
-            font-family: 'Inter', sans-serif;
-        }
+    * {
+        font-family: 'Inter', sans-serif;
+    }
 
-        body {
-            /* Link ảnh vũ trụ chất lượng cao (bạn có thể thay link khác nếu muốn) */
-            background-image: url('./backgroundweb.jpg');
-            /* Các thuộc tính giúp ảnh hiển thị đẹp nhất */
-            background-size: cover;
-            /* Phóng to ảnh vừa khít màn hình */
-            background-position: center;
-            /* Căn giữa ảnh */
-            background-repeat: no-repeat;
-            /* Không lặp lại ảnh */
-            background-attachment: fixed;
-            /* GIỮ ẢNH ĐỨNG IM KHI CUỘN TRANG */
+    /* BACKGROUND VŨ TRỤ */
+    body {
+        background-image: url('./backgroundweb.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        /* Chuyển màu chữ mặc định sang màu sáng để dễ đọc trên nền tối */
+        color: #f1f5f9; 
+    }
 
-            min-height: 100vh;
-            color: #334155;
-        }
+    /* KHUNG CHÍNH (CARD) - HIỆU ỨNG KÍNH MỜ CỰC MẠNH */
+    .card {
+        /* rgba(255,255,255, 0.4) tương đương màu trắng trong suốt 60% (độ đục 40%) */
+        background: rgba(255, 255, 255, 0.4); 
+        
+        /* Làm nhòe background phía sau (blur) cực mạnh (24px) */
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px); /* Hỗ trợ Safari */
+        
+        /* Viền kính mỏng màu trắng nhẹ để nổi bật khối */
+        border: 1px solid rgba(255, 255, 255, 0.5); 
+        
+        /* Đổ bóng tối để tách biệt với nền */
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); 
+        
+        border-radius: 16px;
+        transition: all 0.3s ease;
+    }
 
-        .card {
-            background: rgba(255, 255, 255, 0.85);
-            /* Đổi từ 0.95 sang 0.85 hoặc 0.8 */
-            backdrop-filter: blur(12px);
-            /* Tăng độ mờ lên xíu cho chữ dễ đọc */
-            box-shadow: 0 10px 30px -10px rgba(13, 148, 136, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 16px;
-            transition: all 0.3s ease;
-        }
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+        border-color: rgba(255, 255, 255, 0.7);
+    }
 
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 40px -12px rgba(13, 148, 136, 0.2);
-        }
+    /* CÁC THÀNH PHẦN BÊN TRONG (Cần điều chỉnh để dễ đọc trên nền trong suốt) */
+    
+    /* Chữ tiêu đề bên trong card */
+    .card h2, .card label {
+        color: #0f172a; /* Đổi sang màu đen/xanh navy đậm */
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); /* Viền sáng nhẹ để chữ không bị chìm */
+    }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #2dd4bf 0%, #0f766e 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
-        }
+    /* Nút bấm (Buttons) */
+    .btn-primary {
+        background: linear-gradient(135deg, #2dd4bf 0%, #0f766e 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(13, 148, 136, 0.4);
+    }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(13, 148, 136, 0.4);
-            filter: brightness(1.05);
-        }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(13, 148, 136, 0.5);
+        filter: brightness(1.1);
+    }
 
-        .btn-primary:active {
-            transform: translateY(0);
-        }
+    .btn-secondary {
+        /* Nút Hủy cũng làm hiệu ứng kính */
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        color: #475569;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
 
-        .btn-secondary {
-            background: white;
-            color: #475569;
-            border: 1px solid #cbd5e1;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.8);
+        color: #1e293b;
+    }
 
-        .btn-secondary:hover {
-            background: #f1f5f9;
-            border-color: #94a3b8;
-            color: #1e293b;
-        }
+    /* Ô nhập liệu (Input Fields) */
+    .input-field {
+        /* Nền ô nhập hơi đục để dễ gõ chữ */
+        background: rgba(255, 255, 255, 0.7); 
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        color: #0f172a;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
 
-        .input-field {
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
+    .input-field::placeholder {
+        color: #64748b;
+    }
 
-        .input-field:focus {
-            outline: none;
-            border-color: #2dd4bf;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.15);
-        }
+    .input-field:focus {
+        outline: none;
+        border-color: #2dd4bf;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.2);
+    }
 
-        /* Stepper Styling */
-        .stepper {
-            display: flex;
-            align-items: center;
-            margin-bottom: 32px;
-            position: relative;
-        }
+    /* HIỆU ỨNG KHUNG CÔNG NỢ & TÙY CHỈNH (Cũng làm kính mờ) */
+    .bg-slate-50, .bg-white { 
+        /* Ghi đè class Tailwind để đồng bộ hiệu ứng kính */
+        background-color: rgba(255, 255, 255, 0.5) !important; 
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+    }
 
-        .stepper-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-            z-index: 2;
-        }
+    .settlement-card {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(12px);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
 
-        .stepper-number {
-            width: 36px;
-            height: 36px;
-            background: #f1f5f9;
-            border: 2px solid #e2e8f0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: #94a3b8;
-            margin-bottom: 8px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    .settlement-card.paid {
+        background: rgba(240, 253, 244, 0.6); /* Xanh trong suốt */
+        border-left: 4px solid #22c55e;
+    }
 
-        .stepper-item.active .stepper-number {
-            background: white;
-            border-color: #0d9488;
-            color: #0d9488;
-            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
-            transform: scale(1.1);
-        }
+    .settlement-card.owing {
+        background: rgba(254, 242, 242, 0.6); /* Đỏ trong suốt */
+        border-left: 4px solid #ef4444;
+    }
 
-        .stepper-item.completed .stepper-number {
-            background: #0d9488;
-            border-color: #0d9488;
-            color: white;
-        }
+    /* STEPPER */
+    .stepper { display: flex; align-items: center; margin-bottom: 32px; position: relative; }
+    .stepper-item { display: flex; flex-direction: column; align-items: center; flex: 1; z-index: 2; }
+    .stepper-number { width: 36px; height: 36px; background: rgba(255,255,255,0.6); border: 2px solid rgba(255,255,255,0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #475569; margin-bottom: 8px; transition: all 0.4s; backdrop-filter: blur(4px); }
+    .stepper-item.active .stepper-number { background: rgba(255,255,255,0.9); border-color: #0d9488; color: #0d9488; box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.2); transform: scale(1.1); }
+    .stepper-line { flex: 1; height: 3px; background: rgba(255,255,255,0.4); margin: 0 -10px; z-index: 1; border-radius: 2px; position: relative; top: -14px; }
+    .stepper-item.completed+.stepper-line { background: #2dd4bf; }
+    .stepper-label { font-size: 12px; color: #0f172a; text-align: center; font-weight: 700; transition: color 0.3s; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
 
-        .stepper-line {
-            flex: 1;
-            height: 3px;
-            background: #e2e8f0;
-            margin: 0 -10px;
-            z-index: 1;
-            border-radius: 2px;
-            position: relative;
-            top: -14px;
-        }
+    /* Chips & Tags */
+    .member-chip {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: linear-gradient(135deg, rgba(204, 251, 241, 0.8) 0%, rgba(153, 246, 228, 0.8) 100%);
+        backdrop-filter: blur(4px);
+        color: #0f766e; padding: 6px 14px; border-radius: 99px; font-size: 13px; font-weight: 600;
+        border: 1px solid rgba(94, 234, 212, 0.5); animation: slideIn 0.3s ease;
+    }
+    .member-avatar { width: 20px; height: 20px; background: #0f766e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; }
 
-        .stepper-item.completed+.stepper-line {
-            background: #2dd4bf;
-        }
+    /* Cải tiến UI: Radio Button Focus */
+    input[type="radio"]:checked+div { color: #0d9488; }
+    label:has(input[type="radio"]:checked) {
+        border-color: #0d9488;
+        background-color: rgba(240, 253, 250, 0.8);
+        box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2);
+    }
 
-        .stepper-label {
-            font-size: 12px;
-            color: #64748b;
-            text-align: center;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.5); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.8); }
 
-        .stepper-item.active .stepper-label {
-            color: #0d9488;
-        }
-
-        /* Chips & Tags */
-        .member-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
-            color: #0f766e;
-            padding: 6px 14px;
-            border-radius: 99px;
-            font-size: 13px;
-            font-weight: 600;
-            border: 1px solid #5eead4;
-            animation: slideIn 0.3s ease;
-        }
-
-        .member-avatar {
-            width: 20px;
-            height: 20px;
-            background: #0f766e;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: bold;
-        }
-
-        /* Settlement Cards */
-        .settlement-card {
-            background: white;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .settlement-card.paid {
-            background: #f0fdf4;
-            border-left: 4px solid #22c55e;
-        }
-
-        .settlement-card.owing {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
-        }
-
-        /* Cải tiến UI: Radio Button Focus */
-        input[type="radio"]:checked+div {
-            color: #0d9488;
-        }
-
-        label:has(input[type="radio"]:checked) {
-            border-color: #0d9488;
-            background-color: #f0fdfa;
-            box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
-        /* Hiệu ứng mượt mà */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fade {
-            animation: slideIn 0.3s ease-out forwards;
-        }
-    </style>
+    /* Hiệu ứng mượt mà */
+    @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade { animation: slideIn 0.3s ease-out forwards; }
+    
+    /* Footer */
+    footer {
+        background: rgba(0, 0, 0, 0.3) !important;
+        backdrop-filter: blur(10px);
+        color: #cbd5e1 !important;
+        border-top: 1px solid rgba(255,255,255,0.1) !important;
+    }
+</style>
 </head>
 
 <body>
