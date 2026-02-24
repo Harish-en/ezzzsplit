@@ -304,43 +304,54 @@ function renderMembers() {
 function renderExpenses() {
     const expensesList = document.getElementById('expensesList');
     expensesList.innerHTML = '';
-
+    
     if (appState.expenses.length === 0) {
-        expensesList.innerHTML = '<div class="empty-state text-center py-6"><i class="fas fa-inbox text-4xl text-slate-300 mb-2 block"></i><p class="text-gray-500 text-sm">Chưa có chi tiêu nào</p></div>';
+        expensesList.innerHTML = '<div class="empty-state text-center py-6"><i class="fas fa-inbox text-4xl text-slate-800/40 mb-2 block"></i><p class="text-slate-800 font-bold text-sm">Chưa có chi tiêu nào</p></div>';
         return;
     }
-
+    
     // Đảo ngược danh sách để bill mới nhất lên đầu
     [...appState.expenses].reverse().forEach(expense => {
         const expenseCard = document.createElement('div');
-        expenseCard.className = 'card bg-white p-4 mb-3 hover:shadow-md transition';
-
+        
+        // Cập nhật class thành kính mờ cho đồng bộ với giao diện mới
+        expenseCard.className = 'bg-white/50 backdrop-blur-md border border-white/60 p-4 mb-3 rounded-xl hover:bg-white/60 transition shadow-sm';
+        
         const safeName = escapeHTML(expense.name);
         const paidByText = escapeHTML(expense.paidBy.join(', '));
         const participantsText = escapeHTML(expense.participants.map(p => p.name).join(', '));
-
+        
         expenseCard.innerHTML = `
             <div class="flex justify-between items-start mb-3">
                 <div>
-                    <h3 class="font-semibold text-gray-800">${safeName}</h3>
-                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-user-check mr-1 text-teal-500"></i>Người trả: ${paidByText}</p>
+                    <h3 class="font-extrabold text-slate-900 text-lg drop-shadow-sm">${safeName}</h3>
+                    
+                    <p class="text-sm font-bold text-slate-800 mt-1">
+                        <i class="fas fa-user-check mr-1 text-teal-700"></i>Người trả: 
+                        <span class="font-extrabold text-teal-900">${paidByText}</span>
+                    </p>
                 </div>
                 <div class="text-right">
-                    <p class="font-bold text-lg text-teal-600">${formatCurrency(expense.amount)}</p>
-                    <p class="text-xs text-gray-400">${expense.date}</p>
+                    <p class="font-extrabold text-xl text-teal-800 drop-shadow-sm">${formatCurrency(expense.amount)}</p>
+                    <p class="text-xs font-bold text-slate-700 mt-1">${expense.date}</p>
                 </div>
             </div>
-            <p class="text-sm text-gray-600 mb-4"><i class="fas fa-users mr-1 text-slate-400"></i>Tham gia: <span class="text-slate-500">${participantsText}</span></p>
+            
+            <p class="text-sm font-bold text-slate-800 mb-4">
+                <i class="fas fa-users mr-1 text-teal-700"></i>Tham gia: 
+                <span class="font-extrabold text-slate-900 leading-relaxed">${participantsText}</span>
+            </p>
+            
             <div class="flex gap-2">
-                <button type="button" class="btn-secondary text-sm flex-1 py-1.5" onclick="handleEditExpense(${expense.id})">
+                <button type="button" class="btn-secondary text-sm flex-1 py-1.5 font-bold text-slate-800 border-white/80" onclick="handleEditExpense(${expense.id})">
                     <i class="fas fa-edit mr-1"></i>Sửa
                 </button>
-                <button type="button" class="btn-secondary text-sm flex-1 py-1.5 text-red-500 hover:bg-red-50 hover:border-red-200" onclick="handleDeleteExpense(${expense.id})">
+                <button type="button" class="btn-secondary text-sm flex-1 py-1.5 font-bold text-red-600 hover:bg-red-100/80 hover:border-red-300 border-white/80" onclick="handleDeleteExpense(${expense.id})">
                     <i class="fas fa-trash mr-1"></i>Xóa
                 </button>
             </div>
         `;
-
+        
         expensesList.appendChild(expenseCard);
     });
 }
